@@ -3,43 +3,38 @@ import Grid  from 'react-bootstrap/lib/Grid';
 import Nav from 'react-bootstrap/lib/Nav';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import NavItem  from 'react-bootstrap/lib/NavItem';
-import { Link } from 'react-router';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+//import { Link } from 'react-router';
+//import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
-import 'bootstrap.css'
+//import routesMap from '../routes';
 
-const propTypes = {
-  children: PropTypes.node
-};
+import '../bootstrap.css'
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to='/'>Hello World</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-            <Nav navbar>
-              <LinkContainer to='/settings'>
-                <NavItem>Settings</NavItem>
-              </LinkContainer>
-              
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-        <Grid>
-          {this.props.children}
-        </Grid>
-      </div>
+      <Router basename="/cfg">
+        <div>
+          <ul>
+            <li><Link to="/configs">Configuration</Link></li>
+            <li><Link to="/settings">Settings</Link></li>
+          </ul>
+
+          {this.props.routes.map((route, i) => (
+            //<RouteWithSubRoutes key={i} {...route} />
+            <Route key={i} path={route.path} render={props => (
+              <route.component {...props}/>
+            )}/>
+          ))}
+        </div>
+      </Router>
     );
   }
 }
-
-App.propTypes = propTypes;
 
 export default App;

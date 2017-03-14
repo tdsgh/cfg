@@ -87,5 +87,5 @@ module.exports = {
         ]
     },
 
-    devtool: process.env.NODE_ENV === 'prod' ? 'source-map' : 'eval-source-map'
+    devtool: process.env.NODE_ENV === 'prod' ? 'source-map' : 'inline-source-map'
 };
