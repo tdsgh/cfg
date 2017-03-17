@@ -36,11 +36,11 @@ var plugins = [
 module.exports = {
     entry: {
         cfgApp: ['./src/client.js'],
-        libs: ['babel-polyfill']
+        libs: ['babel-polyfill', 'react', 'react-dom', 'react-router-dom']
     },
     resolve: {
         //root: path.join(__dirname, 'src'),
-        modules: ['node_modules'],
+        modules: ['node_modules', 'src/components'],
         extensions: ['.js', '.jsx']
     },
 

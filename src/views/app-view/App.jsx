@@ -1,23 +1,36 @@
 import React, { Component, PropTypes  } from 'react';
 //import Grid  from 'react-bootstrap/lib/Grid';
-//import Nav from 'react-bootstrap/lib/Nav';
-//import Navbar from 'react-bootstrap/lib/Navbar';
-//import NavItem  from 'react-bootstrap/lib/NavItem';
-
 import {
   HashRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
 
-//import routesMap from '../routes';
+import Transition from './transition'
 
-import '../bootstrap.css';
+import '../../bootstrap.css';
 import './styles.css';
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this._appController = props.appController;
+    this.state = {transferTo: '/'};
+  }
+
+  componentDidMount() {
+    this._appController.funCb = transfer;
+  }
+
+  transfer(path){
+    this.setState({transferTo: path});
+  }
+
   render() {
+    //if(!this._appController.authenticated)
+      console.log('Authenticated: ' + this._appController.authenticated);
     return (
       <Router basename="">
         <div>
@@ -28,11 +41,9 @@ class App extends Component {
           </ul>
 
           {this.props.routes.map((route, i) => (
-            //<RouteWithSubRoutes key={i} {...route} />
-            <Route key={i} path={route.path} render={props => (
-              <route.component {...props} />
-            )} />
+            <Route key={i} path={route.path} exact={route.exact} component={route.component} />
           ))}
+          <Route component={Transition} path={this.state.transferTo}/>
         </div>
       </Router>
     );
