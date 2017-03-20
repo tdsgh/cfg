@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 
-import Transition from './transition'
+//import Transition from './transition'
 
 import '../../bootstrap.css';
 import './styles.css';
@@ -21,11 +21,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this._appController.funCb = transfer;
-  }
-
-  transfer(path){
-    this.setState({transferTo: path});
+    this._appController.appReady = true;
   }
 
   render() {
@@ -43,7 +39,6 @@ class App extends Component {
           {this.props.routes.map((route, i) => (
             <Route key={i} path={route.path} exact={route.exact} component={route.component} />
           ))}
-          <Route component={Transition} path={this.state.transferTo}/>
         </div>
       </Router>
     );
