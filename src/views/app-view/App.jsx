@@ -6,7 +6,6 @@ import {
   Link
 } from 'react-router-dom';
 
-//import Transition from './transition'
 
 import '../../bootstrap.css';
 import './styles.css';
