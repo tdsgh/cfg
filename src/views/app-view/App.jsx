@@ -16,16 +16,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this._appController = props.appController;
-    this.state = {transferTo: '/'};
+    this._appSubject = this._appController.appSubject;
+    this.state = {transferTo: '/', counter: 0};
+
   }
 
   componentDidMount() {
     this._appController.appReady = true;
+
+    this._appSubject.subscribe({
+      next: (v) => {
+        console.log('counter: ' + v);
+        this.setState({
+          counter: v
+        });
+      }
+    });
   }
 
   render() {
-    //if(!this._appController.authenticated)
-      console.log('Authenticated: ' + this._appController.authenticated);
     return (
       <Router basename="">
         <div>
@@ -34,6 +43,7 @@ class App extends Component {
             <li className=""><Link to="/configs">Configuration</Link></li>
             <li className=""><Link to="/settings">Settings</Link></li>
           </ul>
+          <h2>It is {this.state.counter}.</h2>
 
           {this.props.routes.map((route, i) => (
             <Route key={i} path={route.path} exact={route.exact} component={route.component} />
