@@ -1,4 +1,4 @@
-//global.Promise = require('bluebird');
+global.Promise = require('bluebird');
 
 var webpack = require('webpack');
 var path = require('path');

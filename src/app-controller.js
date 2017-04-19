@@ -1,4 +1,5 @@
 import createHashHistory from 'history/createHashHistory';
+import AuthController from './authController'
 
 import Rx from 'rxjs/Rx';
 
@@ -10,6 +11,8 @@ class ApplicationController {
         this._appSubject = new Rx.Subject();
         this._cnt = 1;
 
+        this._appSubject.subscribe({next: this.lifecycle});
+
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -17,7 +20,9 @@ class ApplicationController {
 
         this.unlisten = history.listen((location, action) => {
             console.log(action, location.pathname, location.state);
-        })
+        });
+
+        this._authController = new AuthController({subject: this._appSubject});
     }
 
     authenticated = false;
@@ -29,8 +34,18 @@ class ApplicationController {
     set appReady (isReady) {this._appReady = isReady;}
 
     tick() {
-        this._appReady && history.location.pathname != '/settings' && history.push('/settings');
-        this._appSubject.next(this._cnt++);
+        //this._appReady && history.location.pathname != '/settings' && history.push('/settings');
+        this._appSubject.next({target: "app", tick: this._cnt++});
+    }
+
+    lifecycle(params){
+        console.log(JSON.stringify(params));
+        if(params.target == "app" && params.type == "state"){
+            if(params.value == "viewReady"){
+                if(!this._authController.authenticated)
+                    this._authController.authenticate();
+            }
+        }
     }
 }
 

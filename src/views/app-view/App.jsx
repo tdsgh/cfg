@@ -23,13 +23,16 @@ class App extends Component {
 
   componentDidMount() {
     this._appController.appReady = true;
+    this._appSubject.next({target: "app", type: "state", value: "viewReady"});
 
     this._appSubject.subscribe({
       next: (v) => {
-        console.log('counter: ' + v);
-        this.setState({
-          counter: v
-        });
+        if(v.target == "app"){
+          console.log('counter: ' + v.tick);
+          this.setState({
+            counter: v.tick
+          });
+        }
       }
     });
   }
