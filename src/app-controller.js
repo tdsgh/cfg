@@ -1,5 +1,6 @@
 import createHashHistory from 'history/createHashHistory';
-import AuthController from './authController'
+import AuthController from './authController';
+import SrvFetch from './srvFetch';
 
 import Rx from 'rxjs/Rx';
 
@@ -11,7 +12,9 @@ class ApplicationController {
         this._appSubject = new Rx.Subject();
         this._cnt = 1;
 
-        this._appSubject.subscribe({next: this.lifecycle});
+        //this.lifecycle = this.lifecycle.bind(this);
+
+        this._appSubject.subscribe({next: this.lifecycle.bind(this)});
 
         this.timerID = setInterval(
             () => this.tick(),
@@ -22,7 +25,7 @@ class ApplicationController {
             console.log(action, location.pathname, location.state);
         });
 
-        this._authController = new AuthController({subject: this._appSubject});
+        this._authController = new AuthController({subject: this._appSubject, srvFetch: SrvFetch});
     }
 
     authenticated = false;
@@ -43,7 +46,9 @@ class ApplicationController {
         if(params.target == "app" && params.type == "state"){
             if(params.value == "viewReady"){
                 if(!this._authController.authenticated)
-                    this._authController.authenticate();
+                    this._authController.authenticate().then(function(resp){
+                        console.log(JSON.stringify(resp));
+                    });
             }
         }
     }

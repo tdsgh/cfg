@@ -29,9 +29,7 @@ class App extends Component {
       next: (v) => {
         if(v.target == "app"){
           console.log('counter: ' + v.tick);
-          this.setState({
-            counter: v.tick
-          });
+          this.setState({ counter: v.tick });
         }
       }
     });
@@ -46,7 +44,7 @@ class App extends Component {
             <li className=""><Link to="/configs">Configuration</Link></li>
             <li className=""><Link to="/settings">Settings</Link></li>
           </ul>
-          <h2>It is {this.state.counter}.</h2>
+          <h1>It is {this.state.counter}.</h1>
 
           {this.props.routes.map((route, i) => (
             <Route key={i} path={route.path} exact={route.exact} component={route.component} />

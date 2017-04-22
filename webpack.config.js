@@ -6,7 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var publicPath = '/cfg/';
+var publicPath = './';
 var cssName = process.env.NODE_ENV === 'prod' ? 'style.[chunkhash].css' : 'style.css';
 var jsHash = process.env.NODE_ENV === 'prod' ? '[name].[chunkhash].js' : '[name].js';
 
@@ -36,7 +36,7 @@ var plugins = [
 module.exports = {
     entry: {
         cfgApp: ['./src/client.js'],
-        libs: ['babel-polyfill', 'react', 'react-dom', 'react-router-dom']
+        libs: ['babel-polyfill', 'react', 'react-dom', 'react-router-dom', 'whatwg-fetch']
     },
     resolve: {
         //root: path.join(__dirname, 'src'),
