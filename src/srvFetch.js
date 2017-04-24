@@ -1,5 +1,22 @@
 import 'whatwg-fetch';
+import 'lodash';
+import appUtil from './utils/appUtil'
 import fetchConfig from './configs/fetch.json';
+
+const apiResponseNotNumericFields = [
+      "ean",
+      "upc",
+      "sku",
+      "isbn_13",
+      "isbn",
+      "asin",
+      "p_asin",
+      "name",
+      "product_code"
+    ];
+function isApiResponseFieldNumeric(field, value) {
+    return _.indexOf(apiResponseNotNumericFields, field.toLowerCase()) === -1;
+}
 
 class SrvFetchClass {
     constructor (){
@@ -29,9 +46,11 @@ class SrvFetchClass {
             mode: "cors",
             body: formData
             //body: JSON.stringify(options.data)
-        }).then(function(response){
-            return response.text()
-        });
+        }).then(
+            (response) => response.text()
+        ).then(
+            (respStr) => appUtil.cyclicParseJson(respStr)
+        );
     }
 }
 

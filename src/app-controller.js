@@ -14,7 +14,7 @@ class ApplicationController {
 
         //this.lifecycle = this.lifecycle.bind(this);
 
-        this._appSubject.subscribe({next: this.lifecycle.bind(this)});
+        this._appSubject.filter((e) => (e.target == "app" && e.type == "state")).subscribe({next: this.lifecycle.bind(this)});
 
         this.timerID = setInterval(
             () => this.tick(),
@@ -43,13 +43,11 @@ class ApplicationController {
 
     lifecycle(params){
         console.log(JSON.stringify(params));
-        if(params.target == "app" && params.type == "state"){
-            if(params.value == "viewReady"){
-                if(!this._authController.authenticated)
-                    this._authController.authenticate().then(function(resp){
-                        console.log(JSON.stringify(resp));
-                    });
-            }
+        if(params.value == "viewReady"){
+            if(!this._authController.authenticated)
+                this._authController.authenticate().then(function(resp){
+                    console.log(JSON.stringify(resp));
+                });
         }
     }
 }
