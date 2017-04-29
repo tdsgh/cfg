@@ -23,6 +23,7 @@ class ApplicationController {
 
         this.unlisten = history.listen((location, action) => {
             console.log(action, location.pathname, location.state);
+            this._appSubject.next({target: "app", type: "transition", value: location.pathname});
         });
 
         this._authController = new AuthController({subject: this._appSubject, srvFetch: SrvFetch});
@@ -38,7 +39,7 @@ class ApplicationController {
 
     tick() {
         //this._appReady && history.location.pathname != '/settings' && history.push('/settings');
-        this._appSubject.next({target: "app", tick: this._cnt++});
+        this._appSubject.next({target: "app", type: "tick", value: this._cnt++});
     }
 
     lifecycle(params){

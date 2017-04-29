@@ -9,11 +9,13 @@ const routes = [
   },*/
   {
     path: '/configs',
-    component: ConfigsPage
+    component: ConfigsPage,
+    name: 'Configuration'
   },
   {
     path: '/settings',
-    component: SettingsPage
+    component: SettingsPage,
+    name: 'Settings'
   }
 ]
 

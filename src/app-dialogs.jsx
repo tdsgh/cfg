@@ -1,5 +1,5 @@
 import React, { Component, PropTypes  } from 'react';
-//import Grid  from 'react-bootstrap/lib/Grid';
+import LoginDlg  from 'dialogs/loginDlg';
 
 
 //import './styles.css';

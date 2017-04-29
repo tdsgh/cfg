@@ -4,3 +4,7 @@
     width: 35px;
     margin: 4px 2px 0px 10px;
 }
+
+.hidden{
+    display: none;
+}
