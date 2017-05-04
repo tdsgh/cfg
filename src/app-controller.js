@@ -12,8 +12,6 @@ class ApplicationController {
         this._appSubject = new Rx.Subject();
         this._cnt = 1;
 
-        //this.lifecycle = this.lifecycle.bind(this);
-
         this._appSubject.filter((e) => (e.target == "app" && e.type == "state")).subscribe({next: this.lifecycle.bind(this)});
 
         this.timerID = setInterval(
@@ -29,16 +27,13 @@ class ApplicationController {
         this._authController = new AuthController({subject: this._appSubject, srvFetch: SrvFetch});
     }
 
-    authenticated = false;
-
     get appSubject (){
         return this._appSubject;
     }
 
-    set appReady (isReady) {this._appReady = isReady;}
+    //set appReady (isReady) {this._appReady = isReady;}
 
     tick() {
-        //this._appReady && history.location.pathname != '/settings' && history.push('/settings');
         this._appSubject.next({target: "app", type: "tick", value: this._cnt++});
     }
 
