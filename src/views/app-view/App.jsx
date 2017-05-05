@@ -5,6 +5,8 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 
 import createHashHistory from 'history/createHashHistory';
 
+import AppDialogs from './app-dialogs';
+
 
 import '../../bootstrap.css';
 import './styles.css';
@@ -65,6 +67,8 @@ class App extends Component {
           const Component = route.component;
           return <Component key={i} isHidden={route.path == this.state.view} />
         })}
+      
+      <AppDialogs subject={this._appSubject} ></AppDialogs>
       </div>
     );
   }
