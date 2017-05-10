@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/lib/Button';
 
 //import './styles.css';
 
-class LoginDialog extends Component {
+class AboutDialog extends Component {
 
     constructor(props) {
         super(props);
@@ -12,7 +12,7 @@ class LoginDialog extends Component {
         this.close = this.close.bind(this);
 
         this.state = {
-            showModal: true //typeof props.showModal != "undefined" ? props.showModal : true
+            showModal: true
         };
     }
 
@@ -27,27 +27,25 @@ class LoginDialog extends Component {
 
     close() {
         this.setState({ showModal: false });
-
-        this.props.obj.value.next({action: "close", value: {name: "nNone", pass: "pNone"}});
     }
 
     render() {
         if(this.state.showModal)
-                console.log("LoginDialog: show");
+                console.log("AboutDialog: show");
         return (
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
+                    <Modal.Title>About</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Login Dialog
+                    About Dialog
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.close}>Login</Button>
+                    <Button onClick={this.close}>Ok</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
-export default LoginDialog;
+export default AboutDialog;

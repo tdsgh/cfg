@@ -1,4 +1,4 @@
-import React, { Component, PropTypes  } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import Grid  from 'react-bootstrap/lib/Grid';
@@ -21,6 +21,8 @@ class App extends Component {
     this._appController = props.appController;
     this._appSubject = this._appController.appSubject;
 
+    this.aboutClicked = this.aboutClicked.bind(this);
+
     this.state = {
       counter: 0,
       view: history.location.pathname
@@ -42,33 +44,39 @@ class App extends Component {
       }
     });
 
-    this._appSubject.next({target: "app", type: "state", value: "viewReady"});
+    this._appSubject.next({ target: "app", type: "state", value: "viewReady" });
   }
 
-  transitionClick(eKey){
+  transitionClick(eKey) {
     history.location.pathname != eKey && history.push(eKey);
+  }
+  aboutClicked(e) {
+    this._appSubject.next({ target: "dialog", type: "about" });
   }
 
   render() {
     return (
       <div>
-        <Nav bsStyle="pills" stacked activeKey={this.state.view} style={{ float: 'left' }} onSelect={this.transitionClick}>
-          <NavItem className={"logo"} disabled ></NavItem>
-          {
-            this.props.routes.map((route, i) => (
-              <NavItem key={i} eventKey={route.path} >
-                {route.name}
-              </NavItem>
-            ))
-          }
-        </Nav>
+        <div style={{ float: 'left' }}>
+          <div className={"logo"} onClick={this.aboutClicked}></div>
+          <Nav bsStyle="pills" stacked activeKey={this.state.view} onSelect={this.transitionClick}>
+
+            {
+              this.props.routes.map((route, i) => (
+                <NavItem key={i} eventKey={route.path} >
+                  {route.name}
+                </NavItem>
+              ))
+            }
+          </Nav>
+        </div>
         <h1>It is {this.state.counter}.</h1>
         {this.props.routes.map((route, i) => {
           const Component = route.component;
-          return <Component key={i} isHidden={route.path == this.state.view} />
+          return <Component key={i} isHidden={route.path == this.state.view} appSubject={this._appSubject} />
         })}
-      
-      <AppDialogs subject={this._appSubject} ></AppDialogs>
+
+        <AppDialogs subject={this._appSubject} ></AppDialogs>
       </div>
     );
   }
