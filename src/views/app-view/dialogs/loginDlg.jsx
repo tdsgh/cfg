@@ -12,7 +12,7 @@ class App extends Component {
         this.close = this.close.bind(this);
 
         this.state = {
-            showModal: typeof props.showModal != "undefined" ? props.showModal : true
+            showModal: true //typeof props.showModal != "undefined" ? props.showModal : true
         };
     }
 
@@ -21,8 +21,8 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(this.state.showModal != nextProps.showModal)
-            this.setState({showModal: nextProps.showModal});
+        if(this.props.subj !== nextProps.subj)
+            this.setState({showModal: true});
     }
 
     close() {

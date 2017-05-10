@@ -24,10 +24,6 @@ class AuthController {
                 data: credentials
             });
         });
-        // return this._srvFetch.fetch({
-        //     call: "login",
-        //     data: credentials
-        // });
     }
 }
 

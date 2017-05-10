@@ -35,7 +35,7 @@ class AppDialogs extends Component {
         if(DialogClass){
             console.log("app-dialogs: dialog type " + this.state.dlgType);
         return (
-            <DialogClass showModal subj={this.state.subject}>
+            <DialogClass subj={this.state.subject}>
             </DialogClass>
         );
         } else{
