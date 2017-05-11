@@ -33,13 +33,11 @@ class App extends Component {
   componentDidMount() {
     this._appSubject.filter((e) => (e.target == "app" && e.type == "tick")).subscribe({
       next: (v) => {
-        console.log('counter: ' + v.value);
         this.setState({ counter: v.value });
       }
     });
     this._appSubject.filter((e) => (e.target == "app" && e.type == "transition")).subscribe({
       next: (v) => {
-        console.log('Start transit to: ' + v.value);
         this.setState({ view: v.value });
       }
     });
@@ -60,7 +58,6 @@ class App extends Component {
         <div style={{ float: 'left' }}>
           <div className={"logo"} onClick={this.aboutClicked}></div>
           <Nav bsStyle="pills" stacked activeKey={this.state.view} onSelect={this.transitionClick}>
-
             {
               this.props.routes.map((route, i) => (
                 <NavItem key={i} eventKey={route.path} >

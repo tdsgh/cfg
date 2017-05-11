@@ -27,6 +27,10 @@ class SrvFetchClass {
         Object.assign(this, props);
     }
 
+    set logger (log){
+        this._logger = log;
+    }
+
     set token (token) {
         this._token = token;
     }
@@ -40,6 +44,8 @@ class SrvFetchClass {
         for(var f in options.data){
             formData.append(f, options.data[f]);
         }
+
+        const start = _.now();
         
         return fetch(url, {
             method: options.method || this.method,
@@ -47,9 +53,26 @@ class SrvFetchClass {
             body: formData
             //body: JSON.stringify(options.data)
         }).then(
-            (response) => response.text()
+            (response) => {
+                const resp = _.now();
+                return {respStr: response.text(), start: start, respEnd: resp};
+            }
         ).then(
-            (respStr) => appUtil.cyclicParseJson(respStr)
+            (resp) => {
+                const startParse = _.now();
+                const ret = appUtil.cyclicParseJson(resp.respStr);
+                const endParse = _.now();
+
+                if(this._logger){
+                    this._logger({
+                        target: "fetch",
+                        type: options.call,
+                        value: `[${resp.respEnd - resp.start}][${endParse - resp.respEnd}][${resp.respEnd - resp.start}]`
+                    });
+                }
+
+                return ret;
+            }
         );
     }
 }
