@@ -29,6 +29,7 @@ class LoginDialog extends Component {
         this.setState({ showModal: false });
 
         this.props.obj.value.next({action: "close", value: {name: "nNone", pass: "pNone"}});
+        this.props.obj.value.complete();
     }
 
     render() {

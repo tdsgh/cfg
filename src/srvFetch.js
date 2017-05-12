@@ -55,7 +55,7 @@ class SrvFetchClass {
         }).then(
             (response) => {
                 const resp = _.now();
-                return {respStr: response.text(), start: start, respEnd: resp};
+                return response.text().then((rStr) => ({respStr: rStr, start: start, respEnd: resp}));
             }
         ).then(
             (resp) => {
@@ -67,7 +67,7 @@ class SrvFetchClass {
                     this._logger({
                         target: "fetch",
                         type: options.call,
-                        value: `[${resp.respEnd - resp.start}][${endParse - resp.respEnd}][${resp.respEnd - resp.start}]`
+                        value: `${resp.respEnd - resp.start}][${endParse - resp.respEnd}][${endParse - resp.start}`
                     });
                 }
 

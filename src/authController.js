@@ -14,12 +14,12 @@ class AuthController {
     authenticate() {
         var credentials = { username: "dima", password: "_Dima.t321" };
 
-        var ret = new Rx.Subject();
+        var ret = new Rx.Subject().single();
 
         this._subject.next({ target: "dialog", type: "login", value: ret })
 
-        return ret.single().toPromise().then((crd) => {
-            this._srvFetch.fetch({
+        return ret.toPromise().then((crd) => {
+            return this._srvFetch.fetch({
                 call: "login",
                 data: credentials
             });
